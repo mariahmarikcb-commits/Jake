@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Harold Jake Patindol | IT Profile</title>
 
-  <!-- Font Awesome Icons -->
+  <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
   <!-- Google Font -->
@@ -20,25 +20,58 @@
 
     body {
       font-family: 'Inter', sans-serif;
-      background-color: #0f172a;
       min-height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
-      color: #e5e7eb;
       padding: 20px;
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+
+    /* ===== THEME VARIABLES ===== */
+    body.dark {
+      background-color: #0f172a;
+      color: #e5e7eb;
+    }
+
+    body.light {
+      background-color: #f8fafc;
+      color: #0f172a;
     }
 
     /* ===== CARD ===== */
     .card {
-      background-color: #020617;
+      position: relative;
       width: 100%;
       max-width: 380px;
       padding: 32px 24px;
       border-radius: 18px;
       text-align: center;
-      border: 1px solid #1e293b;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+      border: 1px solid;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+      transition: background 0.3s ease, border 0.3s ease;
+    }
+
+    body.dark .card {
+      background-color: #020617;
+      border-color: #1e293b;
+    }
+
+    body.light .card {
+      background-color: #ffffff;
+      border-color: #e5e7eb;
+    }
+
+    /* ===== TOGGLE BUTTON ===== */
+    .theme-toggle {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      background: none;
+      border: none;
+      font-size: 18px;
+      cursor: pointer;
+      color: inherit;
     }
 
     /* ===== PROFILE IMAGE ===== */
@@ -65,18 +98,22 @@
 
     .role {
       font-size: 13px;
-      color: #94a3b8;
       margin-bottom: 18px;
       text-transform: uppercase;
       letter-spacing: 1px;
+      color: #64748b;
     }
 
     /* ===== ABOUT ===== */
     .about {
       font-size: 14px;
       line-height: 1.6;
-      color: #cbd5f5;
       margin-bottom: 22px;
+      color: #475569;
+    }
+
+    body.dark .about {
+      color: #cbd5f5;
     }
 
     /* ===== SKILLS ===== */
@@ -92,6 +129,11 @@
       font-size: 12px;
       padding: 6px 14px;
       border-radius: 20px;
+      background-color: #e5e7eb;
+      color: #1e293b;
+    }
+
+    body.dark .skill {
       background-color: #1e293b;
       color: #93c5fd;
     }
@@ -105,8 +147,8 @@
     }
 
     .socials a {
-      color: #cbd5e1;
       font-size: 20px;
+      color: inherit;
       transition: color 0.3s ease;
     }
 
@@ -122,11 +164,15 @@
   </style>
 </head>
 
-<body>
+<body class="dark">
 
   <div class="card">
+    <!-- Toggle Button -->
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
+      <i id="themeIcon" class="fa-solid fa-sun"></i>
+    </button>
+
     <div class="profile-img">
-      <!-- Replace with your own photo -->
       <img src="https://via.placeholder.com/300" alt="Profile Picture">
     </div>
 
@@ -147,11 +193,14 @@
     </div>
 
     <div class="socials">
-      <a href="https://facebook.com" target="_blank" aria-label="Facebook">
+      <a href="https://www.facebook.com/Jeykk.05" target="_blank" aria-label="Facebook">
         <i class="fa-brands fa-facebook"></i>
       </a>
-      <a href="https://instagram.com" target="_blank" aria-label="Instagram">
+      <a href="https://www.instagram.com/vibew.kyej/" target="_blank" aria-label="Instagram">
         <i class="fa-brands fa-instagram"></i>
+      </a>
+      <a href="https://www.tiktok.com/@vibew.kyej" target="_blank" aria-label="TikTok">
+        <i class="fa-brands fa-tiktok"></i>
       </a>
     </div>
 
@@ -159,6 +208,30 @@
       © 2026 • Personal Profile Page
     </footer>
   </div>
+
+  <script>
+    const body = document.body;
+    const icon = document.getElementById("themeIcon");
+
+    function toggleTheme() {
+      body.classList.toggle("light");
+      body.classList.toggle("dark");
+
+      const isLight = body.classList.contains("light");
+      icon.className = isLight ? "fa-solid fa-moon" : "fa-solid fa-sun";
+
+      localStorage.setItem("theme", isLight ? "light" : "dark");
+    }
+
+    // Load saved theme
+    const savedTheme = localStorage.getItem("theme");
+    if (savedTheme) {
+      body.className = savedTheme;
+      icon.className = savedTheme === "light"
+        ? "fa-solid fa-moon"
+        : "fa-solid fa-sun";
+    }
+  </script>
 
 </body>
 </html>
